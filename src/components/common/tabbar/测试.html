@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>tianmao</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	body{
+		background-color: pink;
+	}
+	#nav{
+        background:url("images/doubleOne.png") no-repeat right
+            center #fff;
+        height: 63px;
+        width: 900px;
+        border-radius: 5px;
+        margin:100px auto;
+        position: relative;
+	}
+	#nav ul{
+		position: relative;
+	}
+	#nav ul li{
+		float: left;
+		width: 88px;
+		height: 63px;
+		line-height: 70px;
+		text-align: center;
+		cursor: pointer;
+
+	}
+	#tMall{
+		width: 88px;
+		height: 63px;
+		background: url("images/tMall.png") no-repeat;
+		position: absolute;
+	}
+</style>
+</head>
+<body>
+	<div id="nav">
+		<span id="tMall"></span>
+		<ul type="none">
+			<li>双11狂欢</闪电>
+			<li>服装会场</闪电>
+			<li>数码家电</闪电>
+			<li>家具建材</闪电>
+			<li>母婴童装</闪电>
+			<li>手机会场</闪电>
+			<li>美妆会场</闪电>
+			<li>进口会场</闪电>
+			<li>飞猪会场</闪电>
+		</ul>
+	</div>
+	<script>
+		window.onload = function(){
+			var nav = document.getElementById("nav");
+			
+			var tm = nav.children[0];
+			var ul = nav.children[1];
+			var allLis = ul.children;
+
+			var beginX = 0;//记录鼠标位置
+
+			for(let i=0; i<=allLis.length; i++){
+				var li = allLis[i];
+				//console.log(i);
+				li.onmouseover = function(){
+					console.log(i)
+					// console.log("j");
+					// end = this.offsetLeft;
+					// console.log(end);
+				};
+				//  li.onmousedown = function(){
+				// // 	// console.log("a");
+				// 	beginX =  this.offsetLeft;
+				// };
+				//  li.onmouseout = function(){
+				// // 	// console.log("l");
+				// 	end = beginX;
+				// }
+			}
+
+			var begin = 0, end = 0;
+			setInterval(function(){
+				begin += (end-begin) * 0.1;
+				tm.style.left = begin + 'px'; 
+			},10);
+		};
+	</script>
+</body>
+</html>

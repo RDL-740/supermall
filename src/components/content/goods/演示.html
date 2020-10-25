@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.content {
+			width: 500px;
+			height: 800px;
+			background-color: pink;
+			overflow-y: scroll;
+			display: block;
+			margin: 300px auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="content">
+		<ul>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+			<li>列表</li>
+		</ul>
+	</div>
+
+<script src="../../../../node_modules/better-scroll/dist/better-scroll.js">
+</script>
+
+<script>
+const bscroll = new BScroll(document.querySelector('.content'), {
+	probeType: 3
+})
+bscroll.on('scroll', (position) => {
+	console.log(position)
+})
+</script>
+</body> 
+
+
+</html>
