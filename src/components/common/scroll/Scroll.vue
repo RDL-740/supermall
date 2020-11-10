@@ -36,14 +36,21 @@
 			})
 
 			// 2.监听滚动区域
-			this.scroll.on('scroll', (position)=> {
-				this.$emit('scroll', position)
-			})
+			if (this.probeType === 2 || this.probeType === 3) {
+				this.scroll.on('scroll', (position)=> {
+					this.$emit('scroll', position)
+				})	
+			}
+			
 
 			// 3.监听上拉加载更多事件
-			this.scroll.on('pullingUp', () => {
-				this.$emit('pullingUp')
-			})
+			if (this.pullUpLoad) {
+				this.scroll.on('pullingUp', () => {
+					this.$emit('pullingUp')
+				})
+				//console.log(this.scroll)
+			}
+			
 		},
 		methods: {
 			scrollTo(x, y, time=500) {
@@ -51,6 +58,10 @@
 			},
 			finishPullUp() {
 				this.scroll.finishPullUp()
+			},
+			refresh() {
+				this.scroll.refresh()
+				//console.log('已重新计算滚动区域高度')
 			}
 		}	
 	}

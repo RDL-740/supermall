@@ -3,11 +3,12 @@
 		<nav-bar class="home-nav">
 			<div slot="center">购物街</div>
 		</nav-bar>
+		<TabControl :title="['流行', '新款', '精选']" @tabClick="tabClick" ref="tabControl1" v-show="isfixed"></TabControl class="tab-control">	
 		<Scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true" @pullingUp="loadMore">
-			<HomeSwiper :banners="banners"></HomeSwiper>
+			<HomeSwiper :banners="banners" @swiperImageLoad="swiperImageLoad"></HomeSwiper>
 			<HomeRecomend :recommends="recommends"></HomeRecomend>
 			<FeatureView></FeatureView>
-			<TabControl :title="['流行', '新款', '精选']" @tabClick="tabClick"></TabControl>	
+			<TabControl :title="['流行', '新款', '精选']" @tabClick="tabClick" ref="tabControl2"></TabControl>	
 			<GoodsList :goods="showGoods"></GoodsList>
 		</Scroll>
 		<BackTop @click.native="backClick" v-show="isshowBackTop"></BackTop>
@@ -26,6 +27,7 @@
 	import GoodsList from 'components/content/goods/GoodsList'
 
 	import {getHomeMutidata, getHomeGoods} from 'network/home.js'
+	import {debounce} from 'common/utils.js'
 
 
 	export default {
@@ -51,7 +53,9 @@
 				},
 				currentType: 'pop',
 				isshowBackTop: false,
-				scroll: null
+				scroll: null,
+				tabOffsettop: 0,
+				isfixed: false
 			}
 		},
 
@@ -67,17 +71,32 @@
 					case 2: this.currentType = 'sell' 
 					break
 				}
+				this.$refs.tabControl1.currentIndex =index
+				this.$refs.tabControl2.currentIndex = index
 			},
 			backClick() {
-				this.$refs.scroll.scrollTo(0,0, 500)
+				this.$refs.scroll && this.$refs.scroll.scrollTo(0, 0, 1000)
 			},
 			contentScroll(position) {
+				// position 是子组件通过 $emit 传出来的
 				this.isshowBackTop = (-position.y) > 1000
 				//console.log(position)
+				if ((-position.y) > this.tabOffsettop) {
+					this.isfixed = true
+				} else {
+					this.isfixed = false
+				}
 			},
 			loadMore() {
 				this.getHomeGoods(this.currentType)
-				console.log('加载更多')
+				//调用 scroll.finishPullUp 才能继续使用上拉加载更多
+				this.$refs.scroll.finishPullUp()
+				//console.log('加载更多')
+			},
+			swiperImageLoad() {
+				//  在这里拿到的 offsetTop才是正确的
+				this.tabOffsettop = this.$refs.tabControl2.$el.offsetTop
+				//console.log('--')
 			},
 
 
@@ -88,7 +107,7 @@
 					//console.log(res)
 					this.banners = res.data.data.banner.list
 					this.recommends = res.data.data.recommend.list
-					this.$refs.scroll.finishPullUp()
+					
 				})
 			},
 			getHomeGoods(type) {
@@ -100,16 +119,14 @@
 					this.goods[type].list.push(...list)
 					this.goods[type].page += 1
 				})
+
 			} 
 		},
 		computed: {
 			showGoods() {
 				return this.goods[this.currentType].list
-			}
+			} 
 		},
-		// mounted() {
-		// 	this.scroll = new BScroll(document.querySelector('.wrapper'), {})
-		// },
 		created() {
 			//请求多个数据
 			this.getHomeMutidata()
@@ -117,6 +134,23 @@
 			this.getHomeGoods('pop')
 			this.getHomeGoods('new')
 			this.getHomeGoods('sell')
+		},
+		mounted() {
+			// 监听事件总线事件
+			const refresh = this.$refs.scroll && debounce(this.$refs.scroll.refresh, 500)
+			this.$bus.$on('itemImageLoad', () => {
+				//console.log('监听到事件总线事件')
+				// 图片加载完成就调用 scroll.refresh() 重新计算滚动区域的高度
+				//  调用之前判断  scroll 对象是否挂载了，如果是undefine会报错  逻辑运算符
+				this.$refs.scroll && refresh()
+			})
+			// 2.获取 tabcontrol 的 offsettop
+			// 所有的组件都有应该 $el 属性， 用于获取组件中的元素
+			//console.log(this.$refs.tabControl.$el)
+			
+		},
+		destroyed() {
+			console.log('home destroyed')
 		}	
 	}
 </script>
@@ -129,18 +163,12 @@
 
 	#home {
 		height: 100vh;
-		padding-top: 44px;
 		position: relative;
 	}
 
 	.home-nav {
 		background-color: var(--color-tint);
 		color: #fff;
-		position: fixed;
-		width: 100%;
-		top: 0;
-		left: 0;
-		z-index: 99;
 	}
 	.content {
 		position: absolute;
@@ -149,5 +177,10 @@
 		left: 0;
 		right: 0;
 		overflow: hidden;
+	}
+	.tab-control {
+		position: relative;
+		z-index: 9;
+		top: -1px;
 	}
 </style>

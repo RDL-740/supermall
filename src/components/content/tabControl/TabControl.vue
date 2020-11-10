@@ -39,7 +39,7 @@
 		height: 44px;
 		background: #fff;
 		font-size: 14px;
-		position: sticky;
+		/*position: sticky;*/
 		top: 44px;
 		z-index: 99
 	}

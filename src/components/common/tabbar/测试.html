@@ -57,40 +57,48 @@
 		</ul>
 	</div>
 	<script>
-		window.onload = function(){
-			var nav = document.getElementById("nav");
+		// window.onload = function(){
+		// 	var nav = document.getElementById("nav");
 			
-			var tm = nav.children[0];
-			var ul = nav.children[1];
-			var allLis = ul.children;
+		// 	var tm = nav.children[0];
+		// 	var ul = nav.children[1];
+		// 	var allLis = ul.children;
 
-			var beginX = 0;//记录鼠标位置
+		// 	var beginX = 0;//记录鼠标位置
 
-			for(let i=0; i<=allLis.length; i++){
-				var li = allLis[i];
-				//console.log(i);
-				li.onmouseover = function(){
-					console.log(i)
-					// console.log("j");
-					// end = this.offsetLeft;
-					// console.log(end);
-				};
-				//  li.onmousedown = function(){
-				// // 	// console.log("a");
-				// 	beginX =  this.offsetLeft;
-				// };
-				//  li.onmouseout = function(){
-				// // 	// console.log("l");
-				// 	end = beginX;
-				// }
-			}
+		// 	for(let i=0; i<=allLis.length; i++){
+		// 		var li = allLis[i];
+		// 		//console.log(i);
+		// 		li.onmouseover = function(){
+		// 			console.log(i)
+		// 			// console.log("j");
+		// 			// end = this.offsetLeft;
+		// 			// console.log(end);
+		// 		};
+		// 		//  li.onmousedown = function(){
+		// 		// // 	// console.log("a");
+		// 		// 	beginX =  this.offsetLeft;
+		// 		// };
+		// 		//  li.onmouseout = function(){
+		// 		// // 	// console.log("l");
+		// 		// 	end = beginX;
+		// 		// }
+		// 	}
 
-			var begin = 0, end = 0;
-			setInterval(function(){
-				begin += (end-begin) * 0.1;
-				tm.style.left = begin + 'px'; 
-			},10);
-		};
+		// 	var begin = 0, end = 0;
+		// 	setInterval(function(){
+		// 		begin += (end-begin) * 0.1;
+		// 		tm.style.left = begin + 'px'; 
+		// 	},10);
+		// };
+		const fruits ={
+		    appple:22,
+		    pear:34,
+		    orange:88
+		}
+		var keys = Object.values(fruits);
+		console.log(keys);
+		console.log(fruits)
 	</script>
 </body>
 </html>

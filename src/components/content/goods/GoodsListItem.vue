@@ -1,13 +1,13 @@
 <template>
-	<div class="goods-item">
-		<a :href="goodsItem.link">
-			<img :src="goodsItem.show.img">
+	<div class="goods-item" @click="goodItemClick">
+		<!-- <a :href="goodsItem.link"> -->
+			<img :src="showImg" @load="imgLoad">
 			<div class="goods-info">
 				<p>{{goodsItem.title}}</p>
 				<span class="price">{{goodsItem.price}}</span>
 				<span class="collect">{{goodsItem.cfav}}</span>
 			</div>
-		</a>
+		<!-- </a> -->
 	</div>
 </template>
 
@@ -22,10 +22,27 @@
 				type: Object,
 				default() {
 					return {}
-				}
+				} 
+			}
+		}, 
+
+		methods: {
+			imgLoad() {
+				//console.log('图片加载完成')
+				// 用事件总线发射事件
+				this.$bus.$emit('itemImageLoad')
+			},
+			goodItemClick() {
+				this.$router.push('/detail/' + this.goodsItem.iid)
+				//console.log('详情页')
 			}
 		},
-
+		computed: {
+			showImg() {
+				// 满足不同结构的数据需要
+				return this.goodsItem.image || this.goodsItem.show.img
+			}
+		}
 		// created() {
 		// 	console.log(this.goodsItem)
 		// }

@@ -42,7 +42,7 @@
 <style type="text/css">
 	.goods {
 		display: -webkit-flex;
-		display: -moz-flex;
+		display: -moz-flex; 
 		display: -ms-flex;
 		display: -o-flex;
 		display: flex;
@@ -53,5 +53,6 @@
 		flex-wrap: wrap;
 		justify-content: space-around;
 		padding: 2px;
+		background-color: #fff;
 	}
 </style>
