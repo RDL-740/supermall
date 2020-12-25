@@ -26,7 +26,7 @@ const routes = [
 	{
 		path: '/profile',
 		component: Profile
-	},
+	}, 
 	{
 		path: '/category',
 		component: Category
