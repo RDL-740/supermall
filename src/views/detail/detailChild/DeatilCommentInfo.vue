@@ -5,7 +5,7 @@
 			<div class="head-title">用户评价</div>
 			<div class="head-more">更多 ＞</div>
 			<i class="arrow-right"></i>
-		</div>
+		</div> 
 
 		<div class="info-user">
 			<img :src="commentInfo.user.avatar">
@@ -34,7 +34,7 @@
 			commentInfo: {
 				type: Object,
 				default() {
-					return {}
+					return {}  
 				}
 			}
 		},

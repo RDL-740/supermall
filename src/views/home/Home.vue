@@ -55,7 +55,8 @@
 				isshowBackTop: false,
 				scroll: null,
 				tabOffsettop: 0,
-				isfixed: false
+				isfixed: false,
+				saveY: 0
 			}
 		},
 
@@ -126,7 +127,7 @@
 			showGoods() {
 				return this.goods[this.currentType].list
 			} 
-		},
+		},	
 		created() {
 			//请求多个数据
 			this.getHomeMutidata()
@@ -149,9 +150,19 @@
 			//console.log(this.$refs.tabControl.$el)
 			
 		},
-		destroyed() {
-			console.log('home destroyed')
-		}	
+		activated() {
+			// console.log('home actived')
+			// console.log(this.saveY)
+			this.$refs.scroll.scrollTo(0, this.saveY, 0)
+			this.$refs.scroll.refresh()
+		},
+		deactivated() { 
+			// 1. 保存 Y 值
+			// console.log('home deactivated')
+			this.saveY = this.$refs.scroll.getScrollY()
+			// console.log(this.saveY)
+		},	
+
 	}
 </script>
 

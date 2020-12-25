@@ -1,4 +1,4 @@
-<template>
+ <template>
 	<div class="wrapper" ref="wrapper">
 		<div class="content">
 			<slot></slot>
@@ -54,14 +54,17 @@
 		},
 		methods: {
 			scrollTo(x, y, time=500) {
-				this.scroll.scrollTo(x, y, time)
+				this.scroll && this.scroll.scrollTo(x, y, time)
 			},
 			finishPullUp() {
-				this.scroll.finishPullUp()
+				this.scroll && this.scroll.finishPullUp()
 			},
 			refresh() {
-				this.scroll.refresh()
+				this.scroll && this.scroll.refresh()
 				//console.log('已重新计算滚动区域高度')
+			},
+			getScrollY() {
+				return this.scroll ? this.scroll.y : 0
 			}
 		}	
 	}

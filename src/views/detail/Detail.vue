@@ -97,6 +97,9 @@
 				//console.log(this.recommend)
 			})
 		},
+		destroyed() {
+			console.log('destroyed')
+		}
 
 	}
 </script>

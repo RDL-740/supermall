@@ -36,7 +36,7 @@
 		border-bottom: 10px solid #eee;
 	}
 	.homerecomend_item img {
-		width: 65px;
+		width: 65px; 
 		height: 65px;
 		margin-bottom: 10px;
 	}
