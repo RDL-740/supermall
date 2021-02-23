@@ -35,6 +35,7 @@ body {
 	background-color: var(--color-background);
 	color: var(--color-text);
 	width: 100vw;
+	background-color: #F9FAFC;
 }
 a {
 	color: var(--color-text);

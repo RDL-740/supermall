@@ -1,7 +1,8 @@
 <template>
 	<Swiper class="detailSwiper">
-		<SwiperItem v-for="item in topImages">
-			<img :src="item">
+		<SwiperItem v-for="(item, index) in topImages" :key=index>
+			<img v-if="item" :src="item">
+			<img v-else src="~assets/img/common/placeholder.png">
 		</SwiperItem>
 	</Swiper>
 </template>
@@ -26,7 +27,6 @@
 		},
 		mounted() {
 			// console.log(this.topImages)
-			// console.log(typeof(this.topImages))
 		}
 	}
 </script>

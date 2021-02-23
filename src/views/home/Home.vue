@@ -19,7 +19,6 @@
 	import NavBar from 'components/common/navbar/NavBar'
 	import TabControl from 'components/content/tabControl/TabControl'
 	import Scroll from 'components/common/scroll/Scroll'
-	import BackTop from 'components/content/backTop/BackTop'
 
 	import HomeSwiper from './childComps/HomeSwiper'
 	import HomeRecomend from './childComps/HomeRecomend'
@@ -28,7 +27,7 @@
 
 	import {getHomeMutidata, getHomeGoods} from 'network/home.js'
 	import {debounce} from 'common/utils.js'
-
+	import {itemListenerMinix, backTopMixin} from 'common/mixin.js'
 
 	export default {
 		name: 'Home',
@@ -36,7 +35,6 @@
 			NavBar,
 			TabControl,
 			Scroll,
-			BackTop,
 			FeatureView,
 			HomeSwiper,
 			HomeRecomend,
@@ -52,7 +50,7 @@
 					'sell': {page: 0, list: []}
 				},
 				currentType: 'pop',
-				isshowBackTop: false,
+				// isshowBackTop: false,
 				scroll: null,
 				tabOffsettop: 0,
 				isfixed: false,
@@ -64,6 +62,7 @@
 
 			// 事件处理方法
 			tabClick(index) {
+				
 				switch(index) {
 					case 0: this.currentType = 'pop' 
 					break
@@ -72,11 +71,9 @@
 					case 2: this.currentType = 'sell' 
 					break
 				}
-				this.$refs.tabControl1.currentIndex =index
+				// 让两个TabControl的currentIndex保持一致
+				this.$refs.tabControl1.currentIndex = index
 				this.$refs.tabControl2.currentIndex = index
-			},
-			backClick() {
-				this.$refs.scroll && this.$refs.scroll.scrollTo(0, 0, 1000)
 			},
 			contentScroll(position) {
 				// position 是子组件通过 $emit 传出来的
@@ -136,16 +133,23 @@
 			this.getHomeGoods('new')
 			this.getHomeGoods('sell')
 		},
+		// 使用混入技术
+		mixins: [itemListenerMinix, backTopMixin],
 		mounted() {
 			// 监听事件总线事件
-			const refresh = this.$refs.scroll && debounce(this.$refs.scroll.refresh, 500)
-			this.$bus.$on('itemImageLoad', () => {
+			// const refresh = this.$refs.scroll &&  debounce(this.$refs.scroll.refresh, 500)
+			// 保存事件总线事件
+			// this.itemImgListener = () => {
 				//console.log('监听到事件总线事件')
 				// 图片加载完成就调用 scroll.refresh() 重新计算滚动区域的高度
 				//  调用之前判断  scroll 对象是否挂载了，如果是undefine会报错  逻辑运算符
-				this.$refs.scroll && refresh()
-			})
+			// 	this.$refs.scroll && refresh()
+			// }
+
+			// this.$bus.$on('itemImageLoad', this.itemImgListener)
+			
 			// 2.获取 tabcontrol 的 offsettop
+			
 			// 所有的组件都有应该 $el 属性， 用于获取组件中的元素
 			//console.log(this.$refs.tabControl.$el)
 			
@@ -154,13 +158,21 @@
 			// console.log('home actived')
 			// console.log(this.saveY)
 			this.$refs.scroll.scrollTo(0, this.saveY, 0)
-			this.$refs.scroll.refresh()
+
+			// 处于活跃时重新监听事件总线   
+			this.$bus.$on('itemImageLoad', this.itemImgListener)
+			// 直接使用混入的Refresh函数
+			this.Refresh()
 		},
 		deactivated() { 
 			// 1. 保存 Y 值
 			// console.log('home deactivated')
 			this.saveY = this.$refs.scroll.getScrollY()
 			// console.log(this.saveY)
+			
+
+			// 2. 取消全局事件的监听
+			this.$bus.$off('itemImageLoad', this.itemImgListener) 
 		},	
 
 	}

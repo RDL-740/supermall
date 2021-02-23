@@ -7,7 +7,7 @@
       <span v-if="goods.discount" class="discount">{{goods.discount}}</span>
     </div>
     <div class="info-other">
-      <span>{{goods.columns[0]}}</span>
+      <span>{{goods.columns[0]}}</span >
       <span>{{goods.columns[1]}}</span>
       <span>{{goods.Services[goods.Services.length-1].name}}</span>
     </div>
@@ -21,7 +21,7 @@
 </template>
 
 <script type="text/javascript">
-export default {
+export default { 
 	name: 'DetailBaseInfo',
 	props: {
 		goods: {

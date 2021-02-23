@@ -61,7 +61,7 @@
 			},
 			refresh() {
 				this.scroll && this.scroll.refresh()
-				//console.log('已重新计算滚动区域高度')
+				console.log('已重新计算滚动区域高度')
 			},
 			getScrollY() {
 				return this.scroll ? this.scroll.y : 0

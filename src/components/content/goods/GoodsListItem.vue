@@ -1,7 +1,7 @@
 <template>
 	<div class="goods-item" @click="goodItemClick">
 		<!-- <a :href="goodsItem.link"> -->
-			<img :src="showImg" @load="imgLoad">
+			<img v-lazy="showImg" @load="imgLoad">
 			<div class="goods-info">
 				<p>{{goodsItem.title}}</p>
 				<span class="price">{{goodsItem.price}}</span>
@@ -33,7 +33,16 @@
 				this.$bus.$emit('itemImageLoad')
 			},
 			goodItemClick() {
-				this.$router.push('/detail/' + this.goodsItem.iid)
+				if (this.$route.path.indexOf('detail') == 1) {
+					var Str = '/detail/' + this.goodsItem.item_id
+					// console.log(this.goodsItem)
+					this.$router.replace({path: Str})
+					this.$router.go(0)
+					// console.log('点击了详情页面的推荐数据')	
+				} else {
+					// console.log(this.goodsItem)
+					this.$router.push('/detail/' + this.goodsItem.iid)
+				}
 				//console.log('详情页')
 			}
 		},
